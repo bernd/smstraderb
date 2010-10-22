@@ -35,7 +35,6 @@ class SMSTradeRB
     #http.use_ssl = true if uri.scheme == "https"  # enable SSL/TLS
 
     response = http.start do
-      puts build_request
       http.request_get(build_request)
     end
 
