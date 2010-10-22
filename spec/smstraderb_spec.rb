@@ -110,11 +110,31 @@ describe SMSTradeRB do
   end
 
   describe "#send" do
+    it "will encode and sanitize the phone number correctly" do
+      app = SMSTradeRB::Server.new(:code => 999)
+      Artifice.activate_with(app) do
+        sms = SMSTradeRB.new(:route => :basic, :key => 'mykey', :debug => false)
+        sms.send(:to => '+12 34-567', :message => 'my message')
+      end
+
+      app.params['to'].should == '+1234567'
+    end
+
+    it "will encode the message correctly" do
+      app = SMSTradeRB::Server.new(:code => 999)
+      Artifice.activate_with(app) do
+        sms = SMSTradeRB.new(:route => :basic, :key => 'mykey', :debug => false)
+        sms.send(:to => '+12 34-567', :message => 'my message $foo+bar')
+      end
+
+      app.params['to'].should == '+1234567'
+    end
+
     context "success" do
       it "returns a response object" do
         Artifice.activate_with(SMSTradeRB::Server.new(:code => 999)) do
           sms = SMSTradeRB.new(:route => :basic, :key => 'mykey', :debug => false)
-          sms.send(:to => '1234', :message => 'my message').code.should be(999)
+          sms.send(:to => '+1234', :message => 'my message').code.should be(999)
         end
       end
     end

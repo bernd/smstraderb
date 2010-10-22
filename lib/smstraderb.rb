@@ -27,7 +27,7 @@ class SMSTradeRB
   end
 
   def send(options)
-    @to = options[:to]
+    @to = escape(check_phone_number(options[:to]))
     @message = escape(options[:message])
 
     uri = URI.parse(SMSTradeRB::HTTP_GATEWAY)
