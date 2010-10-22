@@ -5,6 +5,8 @@ require 'smstraderb/constants'
 
 class SMSTradeRB
   class Server
+    attr_reader :params
+
     def initialize(options = {})
       @options = options
     end
@@ -14,40 +16,40 @@ class SMSTradeRB
     end
 
     def call(env)
-      params = Rack::Request.new(env).params
+      @params = Rack::Request.new(env).params
 
       # The route param is mandatory.
-      unless params['route']
+      unless @params['route']
         return respond_with('40')
       end
 
       # There are only a few valid route values.
-      unless SMSTradeRB::ROUTES.include?(params['route'].to_sym)
+      unless SMSTradeRB::ROUTES.include?(@params['route'].to_sym)
         return respond_with('40')
       end
 
       # The to params is mandatory.
-      unless params['to']
+      unless @params['to']
         return respond_with('10')
       end
 
       # The to params needs to be in a valid format.
-      unless params['to'] =~ /^\+?\d+/
+      unless @params['to'] =~ /^\+?\d+/
         return respond_with('10')
       end
 
       # The key param is mandatory.
-      unless params['key']
+      unless @params['key']
         return respond_with('50')
       end
 
       # The message params is mandatory.
-      unless params['message']
+      unless @params['message']
         return respond_with('30')
       end
 
       # Check if the messagetype is valid.
-      if params['messagetype'] and !SMSTradeRB::MESSAGE_TYPES.include?(params['messagetype'].to_sym)
+      if @params['messagetype'] and !SMSTradeRB::MESSAGE_TYPES.include?(@params['messagetype'].to_sym)
         return respond_with('31')
       end
 
@@ -55,15 +57,15 @@ class SMSTradeRB
       ret = [@options[:code] || 100]
 
       # Some optional parameters which modify the return value.
-      if params['message_id'] == '1'
+      if @params['message_id'] == '1'
         ret[1] = '123456789'
       end
 
-      if params['cost'] == '1'
+      if @params['cost'] == '1'
         ret[2] = '0.055'
       end
 
-      if params['count'] == '1'
+      if @params['count'] == '1'
         ret[3] = '1'
       end
 

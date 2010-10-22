@@ -114,4 +114,16 @@ describe SMSTradeRB::Server do
       end
     end
   end
+
+  describe "call inspection" do
+    it "provides access to the received params" do
+      @rack_app = SMSTradeRB::Server.new
+      def app
+        @rack_app
+      end
+      get '/', @params
+
+      @rack_app.params['message'].should == @params[:message]
+    end
+  end
 end
