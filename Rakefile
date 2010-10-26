@@ -1,9 +1,8 @@
 require 'bundler'
 Bundler::GemHelper.install_tasks
 
-require 'spec/rake/spectask'
+require 'rspec/core/rake_task'
 
-Spec::Rake::SpecTask.new do |t|
-  t.warning = true
+RSpec::Core::RakeTask.new do |t|
   t.rcov = false
 end
