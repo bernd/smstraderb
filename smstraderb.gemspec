@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
   s.require_paths = ['lib']
 
   s.add_development_dependency 'rake'
-  s.add_development_dependency 'rspec', '~> 1.3.0'
+  s.add_development_dependency 'rspec', '~> 2.0.0'
   s.add_development_dependency 'artifice'
   s.add_development_dependency 'rack-test'
 end
