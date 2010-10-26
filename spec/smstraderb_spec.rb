@@ -17,9 +17,9 @@ describe SMSTradeRB do
     end
 
     it "raises an exception if the number is invalid" do
-      lambda {
+      expect{
         SMSTradeRB.new(:to => '123456abc')
-      }.should raise_error(SMSTradeRB::InvalidFormat)
+      }.to raise_error(SMSTradeRB::InvalidFormat)
     end
 
     it "removes whitespace" do
@@ -53,15 +53,15 @@ describe SMSTradeRB do
     end
 
     it "raises an exception if route is not :gold or :direct" do
-      lambda {
+      expect {
         SMSTradeRB.new(:from => '123456').from.should == '123456'
-      }.should raise_error(SMSTradeRB::InvalidOption)
+      }.to raise_error(SMSTradeRB::InvalidOption)
     end
 
     it "verifies the length (max 11)" do
-      lambda {
+      expect {
         SMSTradeRB.new(:route => :gold, :from => 'ab cd sdfses')
-      }.should raise_error(SMSTradeRB::InvalidFormat)
+      }.to raise_error(SMSTradeRB::InvalidFormat)
     end
   end
 
@@ -75,9 +75,9 @@ describe SMSTradeRB do
     end
 
     it "raises an exception on invalid routes" do
-      lambda {
+      expect {
         SMSTradeRB.new(:route => :eeek_invalid)
-      }.should raise_error(SMSTradeRB::InvalidRoute)
+      }.to raise_error(SMSTradeRB::InvalidRoute)
     end
   end
 

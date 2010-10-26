@@ -5,27 +5,27 @@ describe SMSTradeRB::Response do
   let (:response) { "100\n123456789\n0.055\n1" }
 
   it "will raise an exception if the response string is nil" do
-    lambda {
+    expect {
       SMSTradeRB::Response.new(nil)
-    }.should raise_error(SMSTradeRB::InvalidResponse)
+    }.to raise_error(SMSTradeRB::InvalidResponse)
   end
 
   it "will raise an exception with an empty response string" do
-    lambda {
+    expect {
       SMSTradeRB::Response.new("")
-    }.should raise_error(SMSTradeRB::InvalidResponse)
+    }.to raise_error(SMSTradeRB::InvalidResponse)
   end
 
   it "will raise an exception if the response string does not start with an integer" do
-    lambda {
+    expect {
       SMSTradeRB::Response.new("abc")
-    }.should raise_error(SMSTradeRB::InvalidResponse)
+    }.to raise_error(SMSTradeRB::InvalidResponse)
   end
 
   it "will raise an exception if the response code is unknown" do
-    lambda {
+    expect {
       SMSTradeRB::Response.new("12134234123420")
-    }.should raise_error(SMSTradeRB::UnknownResponse)
+    }.to raise_error(SMSTradeRB::UnknownResponse)
   end
 
   describe "#code" do
