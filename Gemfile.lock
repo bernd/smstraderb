@@ -6,7 +6,7 @@ PATH
 GEM
   remote: http://rubygems.org/
   specs:
-    artifice (0.5)
+    artifice (0.6)
       rack-test
     diff-lcs (1.1.2)
     rack (1.2.1)
